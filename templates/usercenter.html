@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户中心</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+<div class="header">
+    <img src="{{ url_for('static', filename='images/logo-black.png') }}" alt="Logo">
+    <a href="{{ url_for('user.dashboard') }}" class="button-link">回到主页</a>
+</div>
+
+<div class="container">
+    <div class="section">
+        <h2 class="centered-title">个人信息</h2>
+        <p class="centered-text">账户: <span>{{ user.Uid }}</span></p>
+    </div>
+
+    <div class="section account-management">
+        <h2>账号管理</h2>
+        <form action="{{ url_for('user.update_info') }}" method="post" class="account-management-form" enctype="multipart/form-data">
+            <label for="Uname">用户名</label>
+            <input type="text" id="Uname" name="Uname" value="{{ user.Uname }}" required>
+            <label for="Ugender">性别</label>
+            <select id="Ugender" name="Ugender" required>
+                <option value="male" {% if user.Ugender =='male' %} selected {% endif %}>男</option>
+                <option value="female" {% if user.Ugender =='female' %} selected {% endif %}>女</option>
+            </select>
+            <label for="Uphone">电话号码</label>
+            <input type="tel" id="Uphone" name="Uphone" value="{{ user.Uphone }}" required>
+            <label for="Upassword">新密码</label>
+            <input type="password" id="Upassword" name="Upassword">
+            <label for="Uheadshot">头像</label>
+            <input type="file" id="Uheadshot" name="Uheadshot">
+            <button type="submit" class="centered-button">更新信息</button>
+        </form>
+
+        <div class="button-container">
+            <a href="#" class="link-button delete-account" onclick="event.preventDefault(); document.getElementById('deleteForm').submit();">删除账号</a>
+
+            <form id="deleteForm" action="{{ url_for('user.delete_account') }}" method="POST" class="delete-account-form" style="display: none;">
+                <input type="hidden" name="Uid" value="{{ user.Uid }}">
+                <button type="submit" class="link-button delete-account">确认删除</button>
+            </form>
+
+            <a href="{{ url_for('user.logout') }}" class="link-button logout right">退出登录</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+

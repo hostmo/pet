@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>安心吃菌</title>
+    <style>
+        .logo {
+            display: block;
+            margin: 10px auto 20px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .register-form {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 40px 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            margin-top: 10px;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 0.5em;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="file"],
+        input[type="email"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        .gender-inputs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .gender-inputs label {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .gender-inputs input[type="radio"] {
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body style="margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Arial', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; background: url('{{ url_for('static', filename='images/loginback2.jpg') }}') no-repeat center center fixed; background-size: cover;">
+<div class="container">
+    <div class="register-form">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+        <h1 style="font-size: 2em; margin-bottom: 0.5em;">立即注册</h1>
+        <form action="{{ url_for('pet.register_pet') }}" method="post" enctype="multipart/form-data">
+            <input type="text" name="Pname" placeholder="宠物名" required>
+            <input type="text" name="Powner" placeholder="宠物主人" required>
+            <input type="file" id="Pimage" name="Pimage">
+             <div class="gender-inputs">
+               <label for="male">男</label>
+               <input id="male" type="radio" name="Pgender" value="male" checked>
+                   <label for="female">女</label>
+               <input id="female" type="radio" name="Pgender" value="female">
+                 <label for="anonymous">不愿透露</label>
+                    <input id="anonymous" type="radio" name="Pgender" value="anonymous">
+           </div>
+            <input type="text" name="Pvariety" placeholder="宠物品种" required>
+            <input type="date" name="Pbrith" placeholder="宠物生日">
+            <button type="submit" class="main-button">确认注册</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
