@@ -77,7 +77,7 @@ def update_pet(Pno):
         if 'Pimage' in request.files and request.files['Pimage'].filename != '' and allowed_file(request.files['Pimage'].filename):
             file = request.files['Pimage']
             filename = secure_filename(file.filename)
-            upload_path = os.path.join('static/uploads', filename)
+            upload_path = os.path.join('uploadpets', filename)
             file.save(upload_path)
             Pimage = upload_path
 
@@ -85,7 +85,7 @@ def update_pet(Pno):
 
         if result.json['code'] == 0:
             flash(result.json['message'], 'success')
-            return redirect(url_for('pet.view_pet', Pno=Pno))
+            return redirect(url_for('pet.update_pet', Pno=Pno))
         else:
             flash(result.json['message'], 'error')
             return redirect(url_for('pet.update_pet', Pno=Pno))
@@ -94,14 +94,16 @@ def update_pet(Pno):
         flash('宠物不存在', 'error')
         return redirect(url_for('user.dashboard'))
 
-    return render_template('update_pet.html', pet=pet_info)
+    return render_template('petcenter.html', pet=pet_info)
 
 @pet.route('/delete/<int:Pno>', methods=['POST', 'GET'])
 def delete_pet(Pno):
-    p = Pet_operation()
-    result = p.delete_pet(Pno)
-    if result.json['code'] == 0:
-        flash(result.json['message'], 'success')
-    else:
-        flash(result.json['message'], 'error')
-    return redirect(url_for('user.dashboard'))
+    if request.method == 'POST':
+        p = Pet_operation()
+        result = p.delete_pet(Pno)
+        if result.json['code'] == 0:
+            flash(result.json['message'], 'success')
+        else:
+            flash(result.json['message'], 'error')
+        return redirect(url_for('user.dashboard'))
+    return render_template('petcenter.html', pet=Pno)
